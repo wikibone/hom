@@ -1,0 +1,53 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { Timeline } from "@/components/Timeline";
+
+export default function HistoryOfMedicine() {
+  const [era, setEra] = useState("Ancient Medicine");
+  
+  const eras = [
+    "Prehistoric Medicine",
+    "Ancient Medicine",
+    "Medieval Medicine",
+    "Renaissance & Enlightenment",
+    "Modern Medicine",
+  ];
+
+  const eraContent = {
+    "Prehistoric Medicine": "Shamans, Herbal Remedies, Trepanation Techniques.",
+    "Ancient Medicine": "Egyptian, Greek, Ayurvedic, and Chinese healing practices.",
+    "Medieval Medicine": "Islamic Golden Age, European monastery-based treatments, plague management.",
+    "Renaissance & Enlightenment": "Anatomical discoveries, rise of scientific medicine, invention of the microscope.",
+    "Modern Medicine": "Antibiotics, imaging technology, AI in surgery, regenerative medicine.",
+  };
+
+  return (
+    <div className="p-8 max-w-4xl mx-auto text-center">
+      <h1 className="text-3xl font-bold mb-4">History of Medicine</h1>
+      <p className="text-lg text-gray-600 mb-6">Tracing the Evolution of Healing</p>
+      <div className="flex justify-center gap-4 mb-6">
+        {eras.map((item) => (
+          <Button key={item} variant={era === item ? "default" : "outline"} onClick={() => setEra(item)}>
+            {item}
+          </Button>
+        ))}
+      </div>
+      <motion.div
+        key={era}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Card className="shadow-lg p-4">
+          <CardContent>
+            <h2 className="text-xl font-semibold mb-2">{era}</h2>
+            <p className="text-gray-700">{eraContent[era]}</p>
+          </CardContent>
+        </Card>
+      </motion.div>
+      <Timeline eras={eras} selectedEra={era} />
+    </div>
+  );
+}
